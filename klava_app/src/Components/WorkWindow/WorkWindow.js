@@ -23,10 +23,7 @@ class WorkWindow extends Component {
   state = {text: testText, inputValue: "", error: false, errPos: 999, currentLine: 0, fin: false}
   counter = 0
   textSeparator = (text) => {
-    if(!text){
-      this.setState({text: this.state.text, inputValue: this.state.inputValue, error: this.state.error, errPos: this.state.errPos, currentLine: this.state.currentLine, fin: true})
-      return []
-    }
+    if(!text) return []
     let resArr = []
   	let resStr = ""
   	let obj = {str: "", words: 0, symb: 0}
@@ -60,7 +57,10 @@ class WorkWindow extends Component {
   }
   textViewer = (text, textValue = "") => {
       console.log("textViewer : => ",text)
-      if(!text)return
+      if(!text){
+        this.setState({text: this.state.text, inputValue: this.state.inputValue, error: this.state.error, errPos: this.state.errPos, currentLine: this.state.currentLine, fin: true})
+        return
+      }
       let checkArr = []
       let aT = text.split("")
       let aV = textValue.split("")
