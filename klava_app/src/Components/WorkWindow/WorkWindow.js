@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
 import './work_window.css';
+import {switchErr, addErr, setErrPos, incSumW, zeroSumW,
+finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine} from  "../../actionCreators.js"
+import {store} from "../../redux_store.js"
+import {Provider, connect}   from 'react-redux';
+
+let mapStateToProps = state => ({err: state.err ,pnl: state.pnl, txt: state.txt})
+let mapDispatchToProps = {switchErr, addErr, setErrPos, incSumW, zeroSumW,
+finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine}
 
 let testText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
@@ -20,7 +28,7 @@ let ErrMess = p =>
       <p style={{backgroundColor: "red"}}>{p.err ? "Очепятка" : false}</p>
 
 class WorkWindow extends Component {
-  state = {text: testText, inputValue: "", error: false, errPos: 999, currentLine: 0, fin: false, errs: 0, sumW: 0, curSpeed: []}
+  state = {text: testText, inputValue: "", currentLine: 0}
   counter = 0
   textSeparator = (text) => {
     if(!text) return []
@@ -47,26 +55,28 @@ class WorkWindow extends Component {
   		}
   	})
   	return resArr
-}
+  }
   inputHandler = e => {
-    console.dir(e.target)
-    let s = this.state.sumW
-    this.setState({text: this.state.text, inputValue: e.target.value, error: this.state.error, errPos: this.state.errPos, currentLine: this.state.currentLine, fin:this.state.fin, errs: this.state.errs, sumW: ++s, curSpeed: this.state.curSpeed})
+    console.log(e.target.value)
+  //  console.log("target",e.target.value)
+  //  console.log(this.props)
+    this.props.incSumW()
+    this.props.addInpV(e.target.value)
+  //  console.log("state",this.props.txt.inputValue)
+    this.setState({text: this.state.text, inputValue: e.target.value, currentLine: this.state.currentLine})
   }
   speedCounter = 0
   seedTimer = e =>{
-    if(this.speedCounter !== 0 )return
+    if(this.speedCounter !== 0 )return//костыль для срабатывания только при первом фокусе
     let timer = setInterval(() => {
-      let hisSpeeds = JSON.parse(JSON.stringify(this.state.curSpeed))
-      hisSpeeds.push(this.state.sumW * 6)
-      console.log(hisSpeeds)
-      this.setState({text: this.state.text, inputValue: this.state.inputValue, error: this.state.error, errPos: this.state.errPos, currentLine: this.state.currentLine, fin:this.state.fin, errs: this.state.errs, sumW: 0, curSpeed: hisSpeeds})
+      this.props.pushSpeed(this.props.pnl.sumW * 6)
+      this.props.zeroSumW()
     },10000)
   }
   textViewer = (text, textValue = "") => {
-      console.log("textViewer : => ",text)
+      console.log("textViewer : => ",text, textValue)
       if(!text){
-        this.setState({text: this.state.text, inputValue: this.state.inputValue, error: this.state.error, errPos: this.state.errPos, currentLine: this.state.currentLine, fin: true,errs: this.state.errs, sumW: this.state.sumW, curSpeed: this.state.curSpeed})
+        this.props.finPrnt()
         return
       }
       let checkArr = []
@@ -80,17 +90,23 @@ class WorkWindow extends Component {
       console.log(errorToggle)
       if(errorToggle && this.counter++ === 0){
         let errors = this.state.errs
-        this.setState({text: this.state.text, inputValue: this.state.inputValue, error: true, errPos: aV.length, currentLine: this.state.currentLine, fin:this.state.fin, errs: ++errors, sumW: this.state.sumW, curSpeed: this.state.curSpeed})
+        this.props.switchErr()
+        this.props.addErr()
+        this.props.setErrPos(aV.length)
       } else {
           if(!errorToggle && this.counter !== 0 ){
             this.counter = 0
-            this.setState({text: this.state.text, inputValue: this.state.inputValue, error: false, errPos: 999, currentLine: this.state.currentLine, fin:this.state.fin, errs: this.state.errs, sumW: this.state.sumW, curSpeed: this.state.curSpeed})
+            this.props.switchErr()
+            this.props.setErrPos(999)
           }
         }
       let fin = checkArr.every(el => typeof el.f === 'boolean' && el.f)
        if(fin)setTimeout(()=>{
         let newLine = this.state.currentLine + 1
-        this.setState({text: this.state.text, inputValue: "", error: this.state.error, errPos: this.state.errPos, currentLine: newLine, fin:this.state.fin, errs: this.state.errs, sumW: this.state.sumW, curSpeed: this.state.curSpeed})
+      //  this.props.cleanInpV()
+      //  this.props.incLine()
+        console.warn("hello")
+        this.setState({text: this.state.text, inputValue: "", currentLine: newLine})
       },100)
       return checkArr.map((el, ind) => {
         let setBack = flag => {
@@ -102,20 +118,22 @@ class WorkWindow extends Component {
       })
   }
   render(){
-    console.log(this.state)
-    console.log("errPos", this.state.errPos)
-    console.warn(this.state.fin)
+    let p = this.props
+    //console.log("txt", p.txt.inputValue)
+    console.log(this.state.inputValue)
     return (
       <div className="work_window">
-          <TextWindow text={!this.state.fin ? this.textViewer(this.textSeparator(this.state.text)[this.state.currentLine], this.state.inputValue): "successful"}/>
-          <MainInput val={this.state.inputValue} inp={this.inputHandler} errP={this.state.errPos} foc={this.seedTimer}/>
-          <ErrMess err={this.state.error}/>
-          <CongrText toggle={this.state.fin}/>
-          errors: {this.state.errs} speed: {this.state.curSpeed[this.state.curSpeed.length - 1]} s/m
+          <TextWindow text={!p.pnl.fin ? /*this.textViewer(p.txt.text[p.txt.currentLine], p.txt.inputValue)*/this.textViewer(this.textSeparator(this.state.text)[this.state.currentLine], this.state.inputValue): "successful"}/>
+          <MainInput val={this.state.inputValue} inp={this.inputHandler} errP={p.err.errPos} foc={this.seedTimer}/>
+          <ErrMess err={p.err.error}/>
+          <CongrText toggle={p.pnl.fin}/>
+          <p>errors: {p.err.errs} speed: {p.pnl.curSpeed[p.pnl.curSpeed.length - 1]} s/m </p>
+          {p.txt.inputValue}
       </div>
     )
   }
 }
+WorkWindow = connect(mapStateToProps, mapDispatchToProps)(WorkWindow)
 
 
 
