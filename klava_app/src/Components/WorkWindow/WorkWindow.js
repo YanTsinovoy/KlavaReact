@@ -18,7 +18,7 @@ let TextWindow = p =>
 
 let CongrText = p =>
       <div className="congr_text" style={{visibility: p.toggle ? "visible" : "hidden"}}>
-        <h1>{'Поздравляю засранец'}</h1>
+        <h1>{'Winner'}</h1>
       </div>
 
 let MainInput = p =>
@@ -26,6 +26,8 @@ let MainInput = p =>
 
 let ErrMess = p =>
       <p style={{backgroundColor: "red"}}>{p.err ? "Очепятка" : false}</p>
+
+store.subscribe(()=> console.log(store.getState())) // подписочка
 
 class WorkWindow extends Component {
   state = {text: testText, inputValue: "", currentLine: 0}
@@ -66,7 +68,7 @@ class WorkWindow extends Component {
     this.setState({text: this.state.text, inputValue: e.target.value, currentLine: this.state.currentLine})
   }
   speedCounter = 0
-  seedTimer = e =>{
+  seedTimer = e => {
     if(this.speedCounter !== 0 )return//костыль для срабатывания только при первом фокусе
     let timer = setInterval(() => {
       this.props.pushSpeed(this.props.pnl.sumW * 6)
@@ -103,8 +105,8 @@ class WorkWindow extends Component {
       let fin = checkArr.every(el => typeof el.f === 'boolean' && el.f)
        if(fin)setTimeout(()=>{
         let newLine = this.state.currentLine + 1
-      //  this.props.cleanInpV()
-      //  this.props.incLine()
+        this.props.cleanInpV()
+        this.props.incLine()
         console.warn("hello")
         this.setState({text: this.state.text, inputValue: "", currentLine: newLine})
       },100)
@@ -118,17 +120,23 @@ class WorkWindow extends Component {
       })
   }
   render(){
+
     let p = this.props
-    //console.log("txt", p.txt.inputValue)
-    console.log(this.state.inputValue)
+    p.addTxt(testText)//КОСТЫЛЬ
+    console.log("render", p.pnl.fin, p.txt.text)
+    console.log("state",this.state.inputValue,"store", p.txt.inputValue)
     return (
       <div className="work_window">
-          <TextWindow text={!p.pnl.fin ? /*this.textViewer(p.txt.text[p.txt.currentLine], p.txt.inputValue)*/this.textViewer(this.textSeparator(this.state.text)[this.state.currentLine], this.state.inputValue): "successful"}/>
-          <MainInput val={this.state.inputValue} inp={this.inputHandler} errP={p.err.errPos} foc={this.seedTimer}/>
-          <ErrMess err={p.err.error}/>
+          <TextWindow text={
+            !p.pnl.fin ?
+            this.textViewer ( p.txt.text[p.txt.currentLine], p.txt.inputValue )
+              : "successful"
+          }/>
+          <MainInput val={p.txt.inputValue} inp={this.inputHandler} errP={p.err.errPos} foc={this.seedTimer}/>
+          <ErrMess err={ p.err.error}/>
           <CongrText toggle={p.pnl.fin}/>
           <p>errors: {p.err.errs} speed: {p.pnl.curSpeed[p.pnl.curSpeed.length - 1]} s/m </p>
-          {p.txt.inputValue}
+          {` inputValue - ${p.txt.inputValue}; currentLine - ${p.txt.currentLine}`}
       </div>
     )
   }

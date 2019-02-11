@@ -84,8 +84,6 @@ let textWorkReducer = (state, action) => {
 }
 
 
-
-
 const reducers = combineReducers({
     err: errorsReducer,
     pnl: panelReduser,
