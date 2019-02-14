@@ -30,7 +30,7 @@ let ErrMess = p =>
 store.subscribe(()=> console.log(store.getState())) // подписочка
 
 class WorkWindow extends Component {
-  state = {text: testText, inputValue: "", currentLine: 0}
+  //state = {text: testText, inputValue: "", currentLine: 0}
   counter = 0
   textSeparator = (text) => {
     if(!text) return []
@@ -59,13 +59,14 @@ class WorkWindow extends Component {
   	return resArr
   }
   inputHandler = e => {
+    console.warn("inputHandler send");
     console.log(e.target.value)
   //  console.log("target",e.target.value)
   //  console.log(this.props)
     this.props.incSumW()
     this.props.addInpV(e.target.value)
   //  console.log("state",this.props.txt.inputValue)
-    this.setState({text: this.state.text, inputValue: e.target.value, currentLine: this.state.currentLine})
+    //this.setState({text: this.state.text, inputValue: e.target.value, currentLine: this.state.currentLine})
   }
   speedCounter = 0
   seedTimer = e => {
@@ -75,6 +76,7 @@ class WorkWindow extends Component {
       this.props.zeroSumW()
     },10000)
   }
+
   textViewer = (text, textValue = "") => {
       console.log("textViewer : => ",text, textValue)
       if(!text){
@@ -85,13 +87,14 @@ class WorkWindow extends Component {
       let aT = text.split("")
       let aV = textValue.split("")
       aT.forEach((symb, ind) => {
+        console.warn("checkArr.push")
         checkArr.push({t: symb, v: aV[ind], f: aV[ind] ? symb === aV[ind] : "default"})
       })
       console.log(checkArr)
       let errorToggle = checkArr.some(el => !el.f)
       console.log(errorToggle)
       if(errorToggle && this.counter++ === 0){
-        let errors = this.state.errs
+      //  let errors = this.state.errs
         this.props.switchErr()
         this.props.addErr()
         this.props.setErrPos(aV.length)
@@ -104,13 +107,15 @@ class WorkWindow extends Component {
         }
       let fin = checkArr.every(el => typeof el.f === 'boolean' && el.f)
        if(fin)setTimeout(()=>{
-        let newLine = this.state.currentLine + 1
+        console.warn("fin");
+        //let newLine = this.state.currentLine + 1
         this.props.cleanInpV()
         this.props.incLine()
         console.warn("hello")
-        this.setState({text: this.state.text, inputValue: "", currentLine: newLine})
+      //  this.setState({text: this.state.text, inputValue: "", currentLine: newLine})
       },100)
       return checkArr.map((el, ind) => {
+        console.warn("checkArr.map");
         let setBack = flag => {
           if(flag === "default") return "gray"
             else if(flag) return "green"
@@ -119,20 +124,24 @@ class WorkWindow extends Component {
         return <span key={ind} style={{backgroundColor: setBack(el.f)}}>{el.t}</span>
       })
   }
+  componentDidMount(){
+    this.props.addTxt(testText)
+  }
   render(){
-
+    console.warn("render")
+    console.log("state", this.state);
     let p = this.props
-    p.addTxt(testText)//КОСТЫЛЬ
+    //p.addTxt(testText)//КОСТЫЛЬ
     console.log("render", p.pnl.fin, p.txt.text)
-    console.log("state",this.state.inputValue,"store", p.txt.inputValue)
+    //console.log("state",this.state.inputValue,"store", p.txt.inputValue)
     return (
       <div className="work_window">
           <TextWindow text={
-            !p.pnl.fin ?
+          //  !p.pnl.fin ?
             this.textViewer ( p.txt.text[p.txt.currentLine], p.txt.inputValue )
-              : "successful"
+          //    : "successful"
           }/>
-          <MainInput val={p.txt.inputValue} inp={this.inputHandler} errP={p.err.errPos} foc={this.seedTimer}/>
+          <MainInput  val={p.txt.inputValue} inp={this.inputHandler} errP={p.err.errPos} foc={this.seedTimer}/>
           <ErrMess err={ p.err.error}/>
           <CongrText toggle={p.pnl.fin}/>
           <p>errors: {p.err.errs} speed: {p.pnl.curSpeed[p.pnl.curSpeed.length - 1]} s/m </p>

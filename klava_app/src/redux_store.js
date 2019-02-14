@@ -1,6 +1,11 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 
+
+let copy = obj => JSON.parse(JSON.stringify(obj))
+
+
+
 let errorsReducer = (state, action) => {
   if(state === undefined) return {
     error: false, // сделана ли ошибка
@@ -18,7 +23,6 @@ let errorsReducer = (state, action) => {
   }
   return state
 }
-
 let panelReduser = (state, action) => {
   if(state === undefined) return {
     sumW: 0 , // количество набраного текста необходимое для замера скорости
@@ -32,10 +36,10 @@ let panelReduser = (state, action) => {
   if(action.type === 'PUSH_SPEED'){
     let arrSp = JSON.parse(JSON.stringify(state.curSpeed))
     arrSp.push(action.speed)
-    return Object.assign(state, {curSpeed: arrSp})
+    return Object.assign(copy(state), {curSpeed: arrSp})
   }
   if(action.type === 'INC_TXT_LN') return
-    Object.assign(state,{typedTextLength: ++state.typedTextLength } )
+    Object.assign(copy(state),{typedTextLength: ++state.typedTextLength } )
   return state
 }
 
@@ -72,14 +76,15 @@ let textWorkReducer = (state, action) => {
       	})
       	return resArr
     }
-    return Object.assign(state, {text: textSeparator(action.text)})
+    return Object.assign(copy(state),{text: textSeparator(action.text)})
   }
   if(action.type === "ADD_INPV"){
+    console.warn(`STORE get input value ${action.value}`);
     console.log(state.inputValue + " => " + action.value)
-    return Object.assign(state, {inputValue: action.value})
+    return Object.assign(copy(state), {inputValue: action.value})
   }
-  if(action.type === "CLEAN_INPV") return Object.assign(state, {inputValue: ""})
-  if(action.type === "INC_LINE") return Object.assign(state, {currentLine: ++state.currentLine})
+  if(action.type === "CLEAN_INPV") return Object.assign(copy(state), {inputValue: ""})
+  if(action.type === "INC_LINE") return Object.assign(copy(state), {currentLine: ++state.currentLine})
   return state
 }
 
