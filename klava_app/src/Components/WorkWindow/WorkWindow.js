@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './work_window.css';
 import {switchErr, addErr, setErrPos, incSumW, zeroSumW,
-finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine} from  "../../actionCreators.js"
+finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint} from  "../../actionCreators.js"
 import {store} from "../../redux_store.js"
 import {Provider, connect}   from 'react-redux';
 
 let mapStateToProps = state => ({err: state.err ,pnl: state.pnl, txt: state.txt})
 let mapDispatchToProps = {switchErr, addErr, setErrPos, incSumW, zeroSumW,
-finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine}
+finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint}
 
 let testText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
@@ -126,6 +126,7 @@ class WorkWindow extends Component {
   }
   componentDidMount(){
     this.props.addTxt(testText)
+    this.props.startPrint()
   }
   render(){
     console.warn("render")
@@ -137,9 +138,9 @@ class WorkWindow extends Component {
     return (
       <div className="work_window">
           <TextWindow text={
-          //  !p.pnl.fin ?
+            !p.pnl.fin ?
             this.textViewer ( p.txt.text[p.txt.currentLine], p.txt.inputValue )
-          //    : "successful"
+              : "successful"
           }/>
           <MainInput  val={p.txt.inputValue} inp={this.inputHandler} errP={p.err.errPos} foc={this.seedTimer}/>
           <ErrMess err={ p.err.error}/>

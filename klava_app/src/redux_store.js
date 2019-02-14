@@ -30,9 +30,10 @@ let panelReduser = (state, action) => {
     fin: false, // индикатор конца
     typedTextLength: 0 // длина наброного текста
   }
-  if(action.type === 'INC_SW') return Object.assign(state,{sumW: ++state.sumW})
-  if(action.type === 'ZERO_SW') return Object.assign(state, {sumW: 0})
-  if(action.type === "FIN_PRINT")return Object.assign(state, {fin: true})
+  if(action.type === 'INC_SW') return Object.assign(copy(state),{sumW: ++state.sumW})
+  if(action.type === 'ZERO_SW') return Object.assign(copy(state), {sumW: 0})
+  if(action.type === "FIN_PRINT")return Object.assign(copy(state), {fin: true})
+  if(action.type === "START_PRINT")return Object.assign(copy(state), {fin: false})
   if(action.type === 'PUSH_SPEED'){
     let arrSp = JSON.parse(JSON.stringify(state.curSpeed))
     arrSp.push(action.speed)
