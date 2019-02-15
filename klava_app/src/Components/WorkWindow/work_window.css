@@ -1,3 +1,3 @@
-.text_window {
+.text_window, .work_window  {
   border: 2px solid black;
 }

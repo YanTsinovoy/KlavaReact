@@ -4,6 +4,7 @@ import {Provider, connect}   from 'react-redux';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import WorkWindow from './Components/WorkWindow/WorkWindow.js'
+import WorkPanel from './Components/Panel/WorkPanel.js'
 import {store} from "./redux_store.js"
 // import store  from './redux_store.js'
 class App extends Component {
@@ -11,7 +12,10 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
-          <WorkWindow/>
+          <div className ="Main">
+            <WorkWindow/>
+            <WorkPanel/>
+          </div>
         </div>
       </Provider>
     );

@@ -3,7 +3,7 @@ import './work_window.css';
 import {switchErr, addErr, setErrPos, incSumW, zeroSumW,
 finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint} from  "../../actionCreators.js"
 import {store} from "../../redux_store.js"
-import {Provider, connect}   from 'react-redux';
+import { connect}   from 'react-redux';
 
 let mapStateToProps = state => ({err: state.err ,pnl: state.pnl, txt: state.txt})
 let mapDispatchToProps = {switchErr, addErr, setErrPos, incSumW, zeroSumW,
@@ -25,50 +25,20 @@ let MainInput = p =>
       <input onInput={p.inp} maxLength={p.errP} value={p.val} onFocus={p.foc}/>
 
 let ErrMess = p =>
-      <p style={{backgroundColor: "red"}}>{p.err ? "Очепятка" : false}</p>
+      <p style={{backgroundColor: "red", visibility: p.err ? "visible" : "hidden"}}>{p.text}</p>
 
 store.subscribe(()=> console.log(store.getState())) // подписочка
 
 class WorkWindow extends Component {
-  //state = {text: testText, inputValue: "", currentLine: 0}
   counter = 0
-  textSeparator = (text) => {
-    if(!text) return []
-    let resArr = []
-  	let resStr = ""
-  	let obj = {str: "", words: 0, symb: 0}
-  	let cW = 8
-  	let cS = 45
-  	text.split("").forEach ((el, ind) => {
-  		obj.str += el
-  		if(el === " "){
-  			obj.words++
-  			obj.symb += obj.str.length
-  			if(obj.symb <= cS || obj.words <= cW){
-  				resStr += obj.str
-  				obj.str = ""
-              } else {
-  				resArr.push(resStr.slice(0, resStr.length - 1))
-  				resStr = ""
-  				resStr += obj.str
-  				obj.str = ""
-  				obj.words = 0
-  			}
-  		}
-  	})
-  	return resArr
-  }
+
   inputHandler = e => {
-    console.warn("inputHandler send");
-    console.log(e.target.value)
-  //  console.log("target",e.target.value)
-  //  console.log(this.props)
     this.props.incSumW()
     this.props.addInpV(e.target.value)
-  //  console.log("state",this.props.txt.inputValue)
-    //this.setState({text: this.state.text, inputValue: e.target.value, currentLine: this.state.currentLine})
   }
+
   speedCounter = 0
+
   seedTimer = e => {
     if(this.speedCounter !== 0 )return//костыль для срабатывания только при первом фокусе
     let timer = setInterval(() => {
@@ -78,7 +48,6 @@ class WorkWindow extends Component {
   }
 
   textViewer = (text, textValue = "") => {
-      console.log("textViewer : => ",text, textValue)
       if(!text){
         this.props.finPrnt()
         return
@@ -87,14 +56,10 @@ class WorkWindow extends Component {
       let aT = text.split("")
       let aV = textValue.split("")
       aT.forEach((symb, ind) => {
-        console.warn("checkArr.push")
         checkArr.push({t: symb, v: aV[ind], f: aV[ind] ? symb === aV[ind] : "default"})
       })
-      console.log(checkArr)
       let errorToggle = checkArr.some(el => !el.f)
-      console.log(errorToggle)
       if(errorToggle && this.counter++ === 0){
-      //  let errors = this.state.errs
         this.props.switchErr()
         this.props.addErr()
         this.props.setErrPos(aV.length)
@@ -107,15 +72,10 @@ class WorkWindow extends Component {
         }
       let fin = checkArr.every(el => typeof el.f === 'boolean' && el.f)
        if(fin)setTimeout(()=>{
-        console.warn("fin");
-        //let newLine = this.state.currentLine + 1
         this.props.cleanInpV()
         this.props.incLine()
-        console.warn("hello")
-      //  this.setState({text: this.state.text, inputValue: "", currentLine: newLine})
       },100)
       return checkArr.map((el, ind) => {
-        console.warn("checkArr.map");
         let setBack = flag => {
           if(flag === "default") return "gray"
             else if(flag) return "green"
@@ -124,17 +84,14 @@ class WorkWindow extends Component {
         return <span key={ind} style={{backgroundColor: setBack(el.f)}}>{el.t}</span>
       })
   }
+
   componentDidMount(){
     this.props.addTxt(testText)
     this.props.startPrint()
   }
+
   render(){
-    console.warn("render")
-    console.log("state", this.state);
     let p = this.props
-    //p.addTxt(testText)//КОСТЫЛЬ
-    console.log("render", p.pnl.fin, p.txt.text)
-    //console.log("state",this.state.inputValue,"store", p.txt.inputValue)
     return (
       <div className="work_window">
           <TextWindow text={
@@ -143,10 +100,8 @@ class WorkWindow extends Component {
               : "successful"
           }/>
           <MainInput  val={p.txt.inputValue} inp={this.inputHandler} errP={p.err.errPos} foc={this.seedTimer}/>
-          <ErrMess err={ p.err.error}/>
+          <ErrMess err={ p.err.error} text={"Error"}/>
           <CongrText toggle={p.pnl.fin}/>
-          <p>errors: {p.err.errs} speed: {p.pnl.curSpeed[p.pnl.curSpeed.length - 1]} s/m </p>
-          {` inputValue - ${p.txt.inputValue}; currentLine - ${p.txt.currentLine}`}
       </div>
     )
   }

@@ -1,0 +1,12 @@
+.work_panel-main {
+  border: 2px solid blue;
+}
+.load_panel {
+  width: 200px; /*test*/
+  height: 40px;
+  border: 1px solid green;
+}
+.load_panel-indicator {
+  background-color: green;
+  height: 40px;/*TEST*/
+}
