@@ -20,7 +20,8 @@ class WorkPanel extends Component {
     let p = this.props
     return (
       <div className="work_panel-main">
-          <LoadPanel numCur={0} numFin={p.pnl.textLength}/>
+          <LoadPanel numCur={p.pnl.typedTextLength}
+          numFin={p.txt.text.reduce((sum, cur) => sum + cur.length, 0)}/>
       </div>
     )
   }

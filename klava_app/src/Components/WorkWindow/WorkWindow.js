@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import './work_window.css';
 import {switchErr, addErr, setErrPos, incSumW, zeroSumW,
-finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint, textSonc} from  "../../actionCreators.js"
+finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV,
+ incLine, startPrint, processingInpVal, saveAndCleanValInpv} from  "../../actionCreators.js"
 import {store} from "../../redux_store.js"
 import { connect}   from 'react-redux';
 
 
 let mapStateToProps = state => ({err: state.err ,pnl: state.pnl, txt: state.txt})
 let mapDispatchToProps = {switchErr, addErr, setErrPos, incSumW, zeroSumW,
-finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint, textSonc}
+finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV, incLine, startPrint,
+ processingInpVal, saveAndCleanValInpv}
 
 let testText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
@@ -34,8 +36,7 @@ class WorkWindow extends Component {
   counter = 0
 
   inputHandler = e => {
-    this.props.incSumW()
-    this.props.addInpV(e.target.value)
+    this.props.processingInpVal(e.target.value)
   }
 
   speedCounter = 0
@@ -72,10 +73,11 @@ class WorkWindow extends Component {
           }
         }
       let fin = checkArr.every(el => typeof el.f === 'boolean' && el.f)
-       if(fin)setTimeout(()=>{
-        this.props.cleanInpV()
+       console.warn(`fin:${fin}`, checkArr)
+       if(fin)/*setTimeout(()=>*/{
+        this.props.saveAndCleanValInpv(textValue)
         this.props.incLine()
-      },100)
+      }/*,100)*/
       return checkArr.map((el, ind) => {
         let setBack = flag => {
           if(flag === "default") return "gray"
@@ -103,6 +105,7 @@ class WorkWindow extends Component {
           <MainInput  val={p.txt.inputValue} inp={this.inputHandler} errP={p.err.errPos} foc={this.seedTimer}/>
           <ErrMess err={ p.err.error} text={"Error"}/>
           <CongrText toggle={p.pnl.fin}/>
+          <p>{testText}</p>
       </div>
     )
   }

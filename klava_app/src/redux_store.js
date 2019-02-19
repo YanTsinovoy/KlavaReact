@@ -27,8 +27,8 @@ let panelReduser = (state, action) => {
     sumW: 0 , // количество набраного текста необходимое для замера скорости
     curSpeed: [], // массив скоростей
     fin: false, // индикатор конца
-    textLength: 0, // длина рабочего текста
-    typedTextLength: 0 // длина наброного текста
+    typedTextLength: 0, // длина набронного в данный момент текста
+    ownLineLength: 0 // длина набранного за все время текста(вспомогательное свойство)
   }
   if(action.type === 'INC_SW')
     return Object.assign(copy(state),{sumW: ++state.sumW})
@@ -45,8 +45,17 @@ let panelReduser = (state, action) => {
     arrSp.push(action.speed)
     return Object.assign(copy(state), {curSpeed: arrSp})
   }
-  if(action.type === 'INC_TXT_LN') return
-    Object.assign(copy(state),{typedTextLength: ++state.typedTextLength } )
+  if(action.type === "SET_TXT_OL") {
+    console.log("SET_TXT_OL",`state.ownLineLength:${state.ownLineLength} + action.lineLen:${action.lineLen}` )
+    let line = state.ownLineLength + action.lineLen
+    return Object.assign(copy(state),
+        {ownLineLength: line } )
+  }
+  if(action.type === 'SET_TXT_LN') {
+    console.log('SET_TXT_LN', `action.leng:${action.leng} + state.ownLineLength:${state.ownLineLength}` );
+    return Object.assign(copy(state),
+        {typedTextLength: action.leng + state.ownLineLength} )
+  }
   return state
 }
 
