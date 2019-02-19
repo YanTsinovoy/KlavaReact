@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './work_panel.css';
 import { connect}   from 'react-redux';
 
-let mapStateToProps = state => ({txt: state.txt})
+let mapStateToProps = state => ({txt: state.txt, pnl: state.pnl})
 
 let LoadPanel = p => {
   let loadLine = p.numCur / (p.numFin / 200)
@@ -15,16 +15,13 @@ let LoadPanel = p => {
 }
 
 class WorkPanel extends Component {
-  valueLength = 0//TEST
-  finLength = 0
   render (){
     console.log("panel render")
     let p = this.props
-    this.valueLength += p.txt.inputValue.length//TEST
-    p.txt.text.forEach(el => this.finLength += el.length)
     return (
       <div className="work_panel-main">
-          <LoadPanel numCur={this.valueLength} numFin={this.finLength}/>
+          <LoadPanel numCur={p.pnl.typedTextLength}
+          numFin={p.txt.text.reduce((sum, cur) => sum + cur.length, 0)}/>
       </div>
     )
   }

@@ -11,7 +11,8 @@ let zeroSumW = () => ({type: 'ZERO_SW'})
 let finPrnt = () => ({type: "FIN_PRINT"})
 let startPrint = () => ({type: "START_PRINT"})
 let pushSpeed = nS => ({type:'PUSH_SPEED', speed: nS})
-let incTxt = () => ({type: 'INC_TXT_LN'})
+let setTxt = length => ({type: 'SET_TXT_LN', leng: length})
+let setOlen = length => ({type: "SET_TXT_OL", lineLen: length})
 //panelReduser end
 
 //textWorkReducer
@@ -20,6 +21,25 @@ let addInpV = val => ({type:"ADD_INPV", value: val })
 let cleanInpV = () => ({type:"CLEAN_INPV"})
 let incLine = () => ({type: "INC_LINE"})
 //textWorkReducer end
+
+//panel & text sonc action
+function processingInpVal(val){
+  return function(dispatch){
+    dispatch(incSumW())
+    dispatch(setTxt(val.length))
+    dispatch(addInpV(val))
+  }
+}
+
+function saveAndCleanValInpv(val){
+  return function(dispatch){
+    console.warn(`saveAndCleanValInpv:${val}`);
+    dispatch(setOlen(val.length))
+    dispatch(cleanInpV())
+  }
+}
+//panel & text sonc action End
+
 
 
 
@@ -39,4 +59,5 @@ let incLine = () => ({type: "INC_LINE"})
 
 
 export {switchErr, addErr, setErrPos, incSumW, zeroSumW,
-finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint}
+finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV,
+ incLine, startPrint, processingInpVal, saveAndCleanValInpv}
