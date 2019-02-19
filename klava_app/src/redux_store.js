@@ -1,7 +1,6 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 
-
 let copy = obj => JSON.parse(JSON.stringify(obj))
 
 
@@ -28,14 +27,21 @@ let panelReduser = (state, action) => {
     sumW: 0 , // количество набраного текста необходимое для замера скорости
     curSpeed: [], // массив скоростей
     fin: false, // индикатор конца
+    textLength: 0, // длина рабочего текста
     typedTextLength: 0 // длина наброного текста
   }
-  if(action.type === 'INC_SW') return Object.assign(copy(state),{sumW: ++state.sumW})
-  if(action.type === 'ZERO_SW') return Object.assign(copy(state), {sumW: 0})
-  if(action.type === "FIN_PRINT")return Object.assign(copy(state), {fin: true})
-  if(action.type === "START_PRINT")return Object.assign(copy(state), {fin: false})
+  if(action.type === 'INC_SW')
+    return Object.assign(copy(state),{sumW: ++state.sumW})
+  if(action.type === 'ZERO_SW')
+    return Object.assign(copy(state), {sumW: 0})
+  if(action.type === "FIN_PRINT")
+    return Object.assign(copy(state), {fin: true})
+  if(action.type === "START_PRINT")
+    return Object.assign(copy(state), {fin: false})
+  if(action.type === "SET_TEXT_LENGTH")
+    return Object.assign(copy(state), {textLength: action.len})
   if(action.type === 'PUSH_SPEED'){
-    let arrSp = JSON.parse(JSON.stringify(state.curSpeed))
+    let arrSp = copy(state.curSpeed)
     arrSp.push(action.speed)
     return Object.assign(copy(state), {curSpeed: arrSp})
   }
@@ -84,8 +90,10 @@ let textWorkReducer = (state, action) => {
     console.log(state.inputValue + " => " + action.value)
     return Object.assign(copy(state), {inputValue: action.value})
   }
-  if(action.type === "CLEAN_INPV") return Object.assign(copy(state), {inputValue: ""})
-  if(action.type === "INC_LINE") return Object.assign(copy(state), {currentLine: ++state.currentLine})
+  if(action.type === "CLEAN_INPV")
+    return Object.assign(copy(state), {inputValue: ""})
+  if(action.type === "INC_LINE")
+    return Object.assign(copy(state), {currentLine: ++state.currentLine})
   return state
 }
 
@@ -96,6 +104,6 @@ const reducers = combineReducers({
     txt: textWorkReducer
 })
 
-const store = createStore(reducers);
+const store = createStore(reducers, applyMiddleware(thunk));
 
 export { store }

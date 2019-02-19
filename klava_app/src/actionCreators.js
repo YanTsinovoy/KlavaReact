@@ -19,9 +19,17 @@ let addTxt = txt => ({type: "ADD_TEXT", text: txt})
 let addInpV = val => ({type:"ADD_INPV", value: val })
 let cleanInpV = () => ({type:"CLEAN_INPV"})
 let incLine = () => ({type: "INC_LINE"})
+let textLen = l => ({type: "SET_TEXT_LENGTH", len: l})
 //textWorkReducer end
 
-
+//asyncCrator
+let textSonc = txt => {
+  return function (dispatch){
+    dispatch(addTxt(txt))
+    dispatch(textLen(txt.length))
+  }
+}
+//asyncCreator End 
 
 
 
@@ -39,4 +47,4 @@ let incLine = () => ({type: "INC_LINE"})
 
 
 export {switchErr, addErr, setErrPos, incSumW, zeroSumW,
-finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint}
+finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint, textSonc}

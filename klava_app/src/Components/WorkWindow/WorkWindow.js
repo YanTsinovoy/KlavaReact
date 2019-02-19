@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './work_window.css';
 import {switchErr, addErr, setErrPos, incSumW, zeroSumW,
-finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint} from  "../../actionCreators.js"
+finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint, textSonc} from  "../../actionCreators.js"
 import {store} from "../../redux_store.js"
 import { connect}   from 'react-redux';
 
+
 let mapStateToProps = state => ({err: state.err ,pnl: state.pnl, txt: state.txt})
 let mapDispatchToProps = {switchErr, addErr, setErrPos, incSumW, zeroSumW,
-finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint}
+finPrnt, pushSpeed, incTxt, addTxt, addInpV, cleanInpV, incLine, startPrint, textSonc}
 
 let testText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
@@ -86,7 +87,7 @@ class WorkWindow extends Component {
   }
 
   componentDidMount(){
-    this.props.addTxt(testText)
+    this.props.textSonc(testText)
     this.props.startPrint()
   }
 
