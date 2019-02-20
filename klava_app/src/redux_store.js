@@ -26,7 +26,7 @@ let errorsReducer = (state, action) => {
 let panelReduser = (state, action) => {
   if(state === undefined) return {
     sumW: 0 , // количество набраного текста необходимое для замера скорости
-    curSpeed: [], // массив скоростей
+    curSpeed: [0], // массив скоростей
     fin: false, // индикатор конца
     typedTextLength: 0, // длина набронного в данный момент текста
     ownLineLength: 0 // длина набранного за все время текста(вспомогательное свойство)
