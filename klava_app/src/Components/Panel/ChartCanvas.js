@@ -1,22 +1,37 @@
 import React, { Component } from 'react';
 
-
 class ChartCanvas extends Component {
+  counter = 0
+  ctx = null
   inc = 0
+  testArr = [0,30,40,50,60,30,129,200,111,45, 89]
   drawChart (){
-    console.log("Drawing",this.props.history)
+    console.log("slice",this.props.history.slice(this.props.history.length - 10 ?  this.props.history.length - 10 : 0, this.props.history.length))
     let height = this.props.sizes[1]
-    const ctx = this.refs.canvas.getContext('2d')
-    this.props.history.slice(this.props.history.length - 6 ?  this.props.history.length - 6 : 0).forEach((coord, ind, arr) => {
-      console.log(ctx, arr, this.inc)
-      if(arr[ind + 1]){
-        ctx.moveTo(this.inc, height - coord);
-        ctx.lineTo(this.inc, height - arr[ind + 1][0] );
-        ctx.stroke();
-        this.inc += 10
+    if(!this.counter) this.ctx = this.refs.canvas.getContext('2d')
+    console.log("clearRect",this.props.sizes[0], this.props.sizes[1])
+    this.ctx.clearRect(0, 0, this.props.sizes[0], this.props.sizes[1])
+    let inc = 0
+    let incArr = []
+    this.props.history.slice(this.props.history.length - 10 ?  this.props.history.length - 10 : 0, this.props.history.length).forEach((coord, ind, arr) => {
+      console.log(this.ctx, arr, this.inc)
+      //Проблема со слайсом при lenght === 10 что происходит?
+      console.warn(arr[ind + 1])
+      if(arr[ind + 1] !== undefined){
+        console.warn("if")
+        console.log("width",this.inc, "heigth",height - coord)
+        console.log("moveTo",inc, height - coord)
+        this.ctx.moveTo((inc += 20) - 20, height - coord);
+        console.log("lineTo",inc,height - arr[ind + 1] )
+        this.ctx.lineTo(inc, height - arr[ind + 1] );
+        this.ctx.stroke();
+        this.ctx.beginPath()
+        incArr.push(inc)
       }
+      console.log(incArr)
+      this.counter ++
+      //ctx.clearRect(0, 0, this.props.sizes[0], this.props.sizes[1])
     })
-    this.inc = 0
   }
 
   shouldComponentUpdate(){return true}
@@ -30,7 +45,7 @@ class ChartCanvas extends Component {
     console.log( p.history)
     return (
       <div>
-        <canvas style={{background: "gray"}} ref="canvas" width={p.sizes[0]} height={p.sizes[1]}/>
+        <canvas style={{background: "red"}} ref="canvas" width={p.sizes[0]} height={p.sizes[1]}/>
         {p.history}
       </div>
     )
