@@ -13,7 +13,7 @@ finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV, incLine, startPrint,
  processingInpVal, saveAndCleanValInpv}
 
 let testText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
+let te = "ttttt tttttttttt tttttttttttt tttttttttttttttttttttt ttttttttttttttttt tttttttttt ttttttttttttt ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
 let TextWindow = p =>
       <div className="text_window">
         {p.text}
@@ -89,7 +89,7 @@ class WorkWindow extends Component {
   }
 
   componentDidMount(){
-    this.props.addTxt(testText)
+    this.props.addTxt(te)
     this.props.startPrint()
   }
 
@@ -105,7 +105,7 @@ class WorkWindow extends Component {
           <MainInput  val={p.txt.inputValue} inp={this.inputHandler} errP={p.err.errPos} foc={this.seedTimer}/>
           <ErrMess err={ p.err.error} text={"Error"}/>
           <CongrText toggle={p.pnl.fin}/>
-          <p>{testText}</p>
+          <p>{te}</p>
       </div>
     )
   }
