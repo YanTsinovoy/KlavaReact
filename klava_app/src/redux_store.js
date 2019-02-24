@@ -142,7 +142,7 @@ let textWorkReducer = (state, action) => {
   if (state === undefined) return {
     text: [], // массив с строками одного текста
     inputValue: "", // значение получамые с инпута
-    currentLine: 0 // текущщая строка массива строк
+    currentLine: 0, // текущщая строка массива строк
   }
   if (action.type === "ADD_TEXT") {
     return copy(state, {

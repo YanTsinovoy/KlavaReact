@@ -5,15 +5,13 @@ finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV,
  incLine, startPrint, processingInpVal, saveAndCleanValInpv} from  "../../actionCreators.js"
 import {store} from "../../redux_store.js"
 import { connect}   from 'react-redux';
-
+import {testText, testText2} from './testText.js'
 
 let mapStateToProps = state => ({err: state.err ,pnl: state.pnl, txt: state.txt})
 let mapDispatchToProps = {switchErr, addErr, setErrPos, incSumW, zeroSumW,
 finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV, incLine, startPrint,
  processingInpVal, saveAndCleanValInpv}
 
-let testText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-let te = "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
 let TextWindow = p =>
       <div className="text_window">
         {p.text}
@@ -36,7 +34,7 @@ class WorkWindow extends Component {
   counter = 0
 
   inputHandler = e => {
-    this.props.processingInpVal(e.target.value)
+    if(!this.props.pnl.fin) this.props.processingInpVal(e.target.value)
   }
 
   firstFocus = 0
@@ -94,7 +92,7 @@ class WorkWindow extends Component {
   }
 
   componentDidMount(){
-    this.props.addTxt(te)
+    this.props.addTxt(testText2)
     this.props.startPrint()
   }
 
@@ -118,26 +116,6 @@ class WorkWindow extends Component {
   }
 }
 WorkWindow = connect(mapStateToProps, mapDispatchToProps)(WorkWindow)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

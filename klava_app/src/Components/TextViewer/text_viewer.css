@@ -1,0 +1,10 @@
+.text_viewer {
+  width: 30vw;
+  height: 30vh;
+  border: 2px solid green;
+  overflow-x: auto;
+}
+
+.text_viewer-line {
+  font-size: 1vw;
+}

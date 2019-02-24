@@ -5,6 +5,7 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import WorkWindow from './Components/WorkWindow/WorkWindow.js'
 import WorkPanel from './Components/Panel/WorkPanel.js'
+import TextViewer from './Components/TextViewer/TextViewer.js'
 import {store} from "./redux_store.js"
 // import store  from './redux_store.js'
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
       <Provider store={store}>
         <div className="App">
           <div className ="Main">
+            <TextViewer/>
             <WorkWindow/>
             <WorkPanel/>
           </div>

@@ -1,0 +1,14 @@
+.chart_canvas {
+
+}
+.chart_canvas_horizontal {
+  display: flex;
+}
+.chart_canvas_horizontal-value_name {
+  transform: rotate(180deg);
+  writing-mode: tb-rl;
+  padding: 0;
+}
+.chart_canvas_step_name {
+  padding: 0;
+}
