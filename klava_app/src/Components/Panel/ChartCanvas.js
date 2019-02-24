@@ -1,40 +1,39 @@
 import React, { Component } from 'react';
 
 class ChartCanvas extends Component {
-  counter = 0
-  ctx = null
-  inc = 0
   drawChart (){
-    console.log("slice",this.props.history.slice(this.props.history.length - 10 ?  this.props.history.length - 10 : 0, this.props.history.length))
     let height = this.props.sizes[1]
+    let width = this.props.sizes[0]
+    let historyBiggerToHeight = this.props.history.reduce((val, num)=>{
+      if(num > val) val = num
+      return val
+    },0)
+    let scaler = historyBiggerToHeight ? height / historyBiggerToHeight : 1
     let ctx = this.refs.canvas.getContext('2d')
-    console.log("clearRect",this.props.sizes[0], this.props.sizes[1])
     ctx.clearRect(0, 0, this.props.sizes[0], this.props.sizes[1])
     let inc = 0
     let incArr = []
-    this.props.history.slice(this.props.history.length - 15 > 0 ?  this.props.history.length - 15 : 0, this.props.history.length).forEach((coord, ind, arr) => {
-      console.log(ctx, arr, this.inc)
-      console.warn(arr[ind + 1])
-      if(arr[ind + 1] !== undefined){
-        console.warn("if")
-        console.log("width",this.inc, "heigth",height - coord)
-        console.log("moveTo",inc, height - coord)
-        ctx.moveTo((inc += 20) - 20, height - coord);
-        console.log("lineTo",inc,height - arr[ind + 1] )
-        ctx.lineTo(inc, height - arr[ind + 1] );
-        ctx.stroke();
-        ctx.beginPath()
-        incArr.push(inc)
-      }
-      console.log(incArr)
-      this.counter ++
-      //ctx.clearRect(0, 0, this.props.sizes[0], this.props.sizes[1])
-    })
+    this.props.history.slice(this.props.history.length - 9 > 0 ?
+      this.props.history.length - 9 : 0, this.props.history.length)
+        .map(num => {
+          console.warn(num)
+          return num * scaler
+        }).forEach((coord, ind, arr) => {
+          if(arr[ind + 1] !== undefined){
+            ctx.moveTo((inc += width/10) - width/10, height - coord);
+            if(height - coord < 0)console.error(`coord:${coord}; scaler:${scaler}; height:${height}; position: ${height - coord}`)
+             else console.warn(`coord:${coord}; scaler:${scaler}; height:${height}; position: ${height - coord}`)
+            ctx.lineTo(inc, height - arr[ind + 1] );
+            ctx.stroke();
+            ctx.beginPath()
+            incArr.push(inc)
+          }
+        })
   }
 
   shouldComponentUpdate(){return true}
+
   componentDidUpdate(){
-    console.log("didUpdate")
     this.drawChart()
   }
 
@@ -43,7 +42,7 @@ class ChartCanvas extends Component {
     console.log( p.history)
     return (
       <div>
-        <canvas style={{background: "red"}} ref="canvas" width={p.sizes[0]} height={p.sizes[1]}/>
+        <canvas style={{background: "gray"}} ref="canvas" width={p.sizes[0]} height={p.sizes[1]}/>
       </div>
     )
   }

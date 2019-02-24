@@ -13,7 +13,7 @@ finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV, incLine, startPrint,
  processingInpVal, saveAndCleanValInpv}
 
 let testText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-let te = "ttttt tttttttttt tttttttttttt tttttttttttttttttttttt ttttttttttttttttt tttttttttt ttttttttttttt ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+let te = "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
 let TextWindow = p =>
       <div className="text_window">
         {p.text}
@@ -25,7 +25,7 @@ let CongrText = p =>
       </div>
 
 let MainInput = p =>
-      <input onInput={p.inp} maxLength={p.errP} value={p.val} onFocus={p.foc}/>
+      <input onInput={p.inp} maxLength={p.errP} value={p.val} onFocus={p.foc} onBlur={p.blur}/>
 
 let ErrMess = p =>
       <p style={{backgroundColor: "red", visibility: p.err ? "visible" : "hidden"}}>{p.text}</p>
@@ -39,14 +39,19 @@ class WorkWindow extends Component {
     this.props.processingInpVal(e.target.value)
   }
 
-  speedCounter = 0
-
+  firstFocus = 0
+  timer = null
   seedTimer = e => {
-    if(this.speedCounter !== 0 )return//костыль для срабатывания только при первом фокусе
-    let timer = setInterval(() => {
-      this.props.pushSpeed(this.props.pnl.sumW * 6)
+    if(this.firstFocus !== 0 )return//костыль для срабатывания только при первом фокусе
+    this.timer = setInterval(() => {
+      this.props.pushSpeed(this.props.pnl.sumW * 30)
       this.props.zeroSumW()
-    },10000)
+    },2000)
+  }
+  inpBlur = e => {
+    this.props.zeroSumW()
+    clearInterval(this.timer)
+    this.firstFocus = 0
   }
 
   textViewer = (text, textValue = "") => {
@@ -95,17 +100,19 @@ class WorkWindow extends Component {
 
   render(){
     let p = this.props
+    if(p.pnl.fin)clearInterval(this.timer)
     return (
       <div className="work_window">
           <TextWindow text={
-            !p.pnl.fin ?
-            this.textViewer ( p.txt.text[p.txt.currentLine], p.txt.inputValue )
-              : "successful"
+            p.pnl.fin ? "successfull"
+              : this.textViewer ( p.txt.text[p.txt.currentLine], p.txt.inputValue )
           }/>
-          <MainInput  val={p.txt.inputValue} inp={this.inputHandler} errP={p.err.errPos} foc={this.seedTimer}/>
+          <MainInput  val={p.txt.inputValue}
+          inp={this.inputHandler} errP={p.err.errPos}
+          foc={this.seedTimer}
+          blur={this.inpBlur}/>
           <ErrMess err={ p.err.error} text={"Error"}/>
           <CongrText toggle={p.pnl.fin}/>
-          <p>{te}</p>
       </div>
     )
   }
