@@ -92,7 +92,7 @@ class WorkWindow extends Component {
   }
 
   componentDidMount(){
-    this.props.addTxt(testText2)
+    this.props.addTxt(testText)
     this.props.startPrint()
   }
 

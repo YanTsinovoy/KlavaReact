@@ -29,6 +29,13 @@
     box-shadow: 0 0.2em 0 0.05em #222;
     border-bottom-color: #555;
 }
+.button:active {
+    background: #2a2a2a;
+    color: #aaa;
+    position: relative;
+    top: 0.2em;
+    box-shadow: 0 0 0 0.05em black;
+}
 .main_klava span {
   display: block;
 }
