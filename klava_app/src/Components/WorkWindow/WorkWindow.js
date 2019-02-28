@@ -23,7 +23,7 @@ let CongrText = p =>
       </div>
 
 let MainInput = p =>
-      <input onInput={p.inp} maxLength={p.errP} value={p.val} onFocus={p.foc} onBlur={p.blur}/>
+      <input className="main_input" onInput={p.inp} maxLength={p.errP} value={p.val} onFocus={p.foc} onBlur={p.blur}/>
 
 let ErrMess = p =>
       <p style={{backgroundColor: "red", visibility: p.err ? "visible" : "hidden"}}>{p.text}</p>

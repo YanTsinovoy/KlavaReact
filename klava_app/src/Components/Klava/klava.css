@@ -1,0 +1,60 @@
+
+.main_klava {
+  border: 2px solid red;
+  padding: 3vw;
+}
+
+.klava_line {
+  display: flex;
+}
+
+.button {
+  width: 4vw;
+  height: 4vw;
+  border: 1px solid black;
+  margin: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+    position: relative;
+    background: #333;
+    text-align: center;
+    color: #eee;
+    border-radius: 0.3em;
+    box-sizing: border-box;
+    cursor: pointer;
+    -webkit-user-select: none;
+    border: 1px solid #444;
+    box-shadow: 0 0.2em 0 0.05em #222;
+    border-bottom-color: #555;
+}
+.main_klava span {
+  display: block;
+}
+#Tab {
+  width: 6vw;
+}
+#line1 #bSlash {
+  width: 6vw;
+}
+#Back {
+  width: 8vw;
+}
+#CapsLock {
+  width: 6vw;
+}
+#Enter {
+  width: 6vw;
+}
+#Shift0, #Shift12 {
+  width: 8.25vw;
+}
+#Ctrl0, #Ctrl6 {
+  width: 6vw;
+}
+#Space {
+  width: 30vw;
+  margin-left: 2.8vw;
+  margin-right: 2.8vw;
+}

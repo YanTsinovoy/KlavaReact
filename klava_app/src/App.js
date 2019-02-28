@@ -7,7 +7,7 @@ import WorkWindow from './Components/WorkWindow/WorkWindow.js'
 import WorkPanel from './Components/Panel/WorkPanel.js'
 import TextViewer from './Components/TextViewer/TextViewer.js'
 import {store} from "./redux_store.js"
-// import store  from './redux_store.js'
+import Klava from './Components/Klava/Klava.js'
 class App extends Component {
   render() {
     return (
@@ -18,6 +18,7 @@ class App extends Component {
             <WorkWindow/>
             <WorkPanel/>
           </div>
+          <Klava/>
         </div>
       </Provider>
     );

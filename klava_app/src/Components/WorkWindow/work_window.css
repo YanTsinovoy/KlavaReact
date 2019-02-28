@@ -1,3 +1,6 @@
 .text_window, .work_window  {
   border: 2px solid black;
 }
+.main_input {
+  width: 100%;
+}
