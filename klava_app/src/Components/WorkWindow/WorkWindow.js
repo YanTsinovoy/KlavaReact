@@ -42,9 +42,9 @@ class WorkWindow extends Component {
   seedTimer = e => {
     if(this.firstFocus !== 0 )return//костыль для срабатывания только при первом фокусе
     this.timer = setInterval(() => {
-      this.props.pushSpeed(this.props.pnl.sumW * 30)
+      this.props.pushSpeed(this.props.pnl.sumW * 60)
       this.props.zeroSumW()
-    },2000)
+    },1000)
   }
   inpBlur = e => {
     this.props.zeroSumW()
@@ -76,7 +76,6 @@ class WorkWindow extends Component {
           }
         }
       let fin = checkArr.every(el => typeof el.f === 'boolean' && el.f)
-       console.warn(`fin:${fin}`, checkArr)
        if(fin)/*setTimeout(()=>*/{
         this.props.saveAndCleanValInpv(textValue)
         this.props.incLine()
@@ -98,7 +97,9 @@ class WorkWindow extends Component {
 
   render(){
     let p = this.props
-    if(p.pnl.fin)clearInterval(this.timer)
+    if(p.pnl.fin){
+      clearInterval(this.timer)
+    }
     return (
       <div className="work_window">
           <TextWindow text={

@@ -8,7 +8,6 @@ let mapStateToProps = state => ({txt: state.txt, pnl: state.pnl, err:state.err})
 
 class WorkPanel extends Component {
   render (){
-    console.log("panel render")
     let p = this.props
     return (
       <div className="work_panel-main">
@@ -20,7 +19,7 @@ class WorkPanel extends Component {
             `curSpeed: ${p.pnl.curSpeed[p.pnl.curSpeed.length-1]}; errors: ${p.err.errs}; typed text: ${p.pnl.typedTextLength}`
             + `; left: ${p.txt.text.reduce((sum, cur) => sum + cur.length, 0) - p.pnl.typedTextLength}`
           }</div>
-          <ChartCanvas sizes={[300,200]} history={p.pnl.curSpeed} names={["characters", "time: 2s"]}/>
+          <ChartCanvas sizes={[300,200]} history={p.pnl.curSpeed} names={["characters", "time: 1s"]}/>
       </div>
     )
   }

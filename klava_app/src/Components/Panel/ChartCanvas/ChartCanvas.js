@@ -15,7 +15,6 @@ class ChartCanvas extends Component {
     let inc = 0
     let incArr = []
     let drawGrid = () => {
-      console.log("drawGrid")
       let xStep = width/10
       let yStep = height/10
       let x = 0
@@ -38,7 +37,6 @@ class ChartCanvas extends Component {
       }
       let i = 0
       while(i++ < 10){
-        console.log("while");
         draw(x, height, xStep, 'vertical')
         draw( width, y, yStep, 'horizontal')
       }
@@ -47,14 +45,13 @@ class ChartCanvas extends Component {
     this.props.history.slice(this.props.history.length - 9 > 0 ?
       this.props.history.length - 9 : 0, this.props.history.length)
         .map(num => {
-          console.warn(num)
           return num * scaler
         }).forEach((coord, ind, arr) => {
           if(arr[ind + 1] !== undefined){
             ctx.beginPath()
             ctx.moveTo((inc += width/10) - width/10, height - coord);
-            ctx.strokeStyle = '#027508'
-            ctx.lineWidth = 2
+            ctx.strokeStyle = '#8ff442'
+            ctx.lineWidth = 4
             ctx.lineCap = 'round'
             ctx.lineJoin = 'round'
             ctx.lineTo(inc, height - arr[ind + 1] );
