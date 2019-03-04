@@ -115,11 +115,20 @@ let textWorkReducer = (state, action) => {
     })
   return state
 }
+let timeReducer = (state={m:0, s:0}, action) => {
+  if(action.type === "INC_TIMER"){
+    if(state.s === 59){
+      return {m: ++state.m, s:0}
+    } else return {m:state.m, s: ++state.s}
+  }
+  return state
+}
 
 const reducers = combineReducers({
   err: errorsReducer,
   pnl: panelReduser,
   txt: textWorkReducer,
+  time: timeReducer
 })
 
 const store = createStore(reducers, applyMiddleware(thunk));

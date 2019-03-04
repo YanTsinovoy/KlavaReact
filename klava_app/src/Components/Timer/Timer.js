@@ -1,32 +1,39 @@
 import React, { Component } from 'react';
 import { connect}   from 'react-redux';
+import "./timer.css"
 
-let mapStateToProps = state => ({speeds: state.pnl.curSpeed})
+let mapStateToProps = state => ({min: state.time.m, sec: state.time.s })
 
-class Timer extends Component{
-  time = [0,0]
-  setTime(){
-    console.log("setTime")
-    if(this.time[1] === 59){
-      this.time[1] = 0
-      this.time[0]++
-    } else this.time[1]++
-    return this.time
-  }
-  // componentDidMount(){
-  //   this.time[1] = 0
-  // }
-  render(){
-    console.log("render", this.props.speeds.length)
-    let p = this.props
-    return (
-      <div className="timer_panel">
-        <div className="timer">
-          {p.speeds.length}
+class Timer extends Component {
+    state = {x: 0, y:0}
+    addZero = num => num <= 9 ? "0" + num : num
+    mouseHandler = e => {
+      this.setState({
+        x: e.clientX - e.target.offsetLeft,
+        y: e.clientY - e.target.offsetTop
+      })
+    }
+    render(){
+      let p = this.props
+      let s = this.state
+      return (
+        <div className="timer_panel"
+          style={
+            {
+              backgroundImage:` radial-gradient(circle farthest-corner at ${s.x}px ${s.y}px, #eaedec60, #00000090)`
+            }
+          }
+          onMouseMove={this.mouseHandler}
+        >
+          <div className="timer">
+            <div className="time">{this.addZero(p.min)}</div>
+            <p className="time-label">MINUTES</p>
+            <div className="time">{this.addZero(p.sec)}</div>
+            <p className="time-label">SECONDS</p>
+          </div>
         </div>
-      </div>
-    )
-  }
+      )
+    }
 }
 Timer = connect(mapStateToProps, {})(Timer)
 

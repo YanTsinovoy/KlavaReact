@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './work_window.css';
 import {switchErr, addErr, setErrPos, incSumW, zeroSumW,
 finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV,
- incLine, startPrint, processingInpVal, saveAndCleanValInpv} from  "../../actionCreators.js"
+ incLine, startPrint, processingInpVal, saveAndCleanValInpv, inpTime} from  "../../actionCreators.js"
 import {store} from "../../redux_store.js"
 import { connect}   from 'react-redux';
 import {testText, testText2} from './testText.js'
@@ -10,7 +10,7 @@ import {testText, testText2} from './testText.js'
 let mapStateToProps = state => ({err: state.err ,pnl: state.pnl, txt: state.txt})
 let mapDispatchToProps = {switchErr, addErr, setErrPos, incSumW, zeroSumW,
 finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV, incLine, startPrint,
- processingInpVal, saveAndCleanValInpv}
+ processingInpVal, saveAndCleanValInpv, inpTime}
 
 let TextWindow = p =>
       <div className="text_window">
@@ -23,10 +23,20 @@ let CongrText = p =>
       </div>
 
 let MainInput = p =>
-      <input className="main_input" onInput={p.inp} maxLength={p.errP} value={p.val} onFocus={p.foc} onBlur={p.blur}/>
+      <textarea
+        className="main_input"
+        onInput={p.inp} maxLength={p.errP}
+        value={p.val} onFocus={p.foc}
+        onBlur={p.blur}
+        style={{border: p.err ? `2px solid red` : "none"}}
+        placeholder="START"
+      ></textarea>
 
-let ErrMess = p =>
-      <p style={{backgroundColor: "red", visibility: p.err ? "visible" : "hidden"}}>{p.text}</p>
+let ErrMess = p =>(
+  <div className="error_mess" style={{backgroundColor: "red", visibility: p.err ? "visible" : "hidden"}}>
+    {p.text}
+  </div>
+)
 
 store.subscribe(()=> console.log(store.getState())) // подписочка
 
@@ -42,6 +52,7 @@ class WorkWindow extends Component {
   seedTimer = e => {
     if(this.firstFocus !== 0 )return//костыль для срабатывания только при первом фокусе
     this.timer = setInterval(() => {
+      this.props.inpTime()
       this.props.pushSpeed(this.props.pnl.sumW * 60)
       this.props.zeroSumW()
     },1000)
@@ -82,11 +93,13 @@ class WorkWindow extends Component {
       }/*,100)*/
       return checkArr.map((el, ind) => {
         let setBack = flag => {
-          if(flag === "default") return "gray"
+          if(flag === "default") return "#d1cfcd"
             else if(flag) return "green"
               else return "red"
         }
-        return <span key={ind} style={{backgroundColor: setBack(el.f)}}>{el.t}</span>
+        return <span className="letter" key={ind} style={
+          {backgroundColor: setBack(el.f)}
+        }>{el.t}</span>
       })
   }
 
@@ -109,7 +122,8 @@ class WorkWindow extends Component {
           <MainInput  val={p.txt.inputValue}
           inp={this.inputHandler} errP={p.err.errPos}
           foc={this.seedTimer}
-          blur={this.inpBlur}/>
+          blur={this.inpBlur}
+          err={ p.err.error}/>
           <ErrMess err={ p.err.error} text={"Error"}/>
           <CongrText toggle={p.pnl.fin}/>
       </div>

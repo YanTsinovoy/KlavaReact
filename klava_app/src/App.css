@@ -6,7 +6,8 @@
   flex-direction: column;
   width: 100vw;
   height: 100vh;
+  background-color: #292725;
 }
-.Main {
+.Main, .Work {
   display: flex;
 }

@@ -39,7 +39,7 @@ class Klava extends Component {
   }
   currentSymbol(text1, text2, currentIndex){
     if(!text2.length)return ""
-    let str2 = text2[currentIndex]
+    let str2 = text2[currentIndex] ? text2[currentIndex] : ""
     let currentSymb = str2.slice((text1.length -1), text1.length)
     return currentSymb
   }

@@ -1,13 +1,19 @@
 
 .main_klava {
-  border: 2px solid red;
-  padding: 3vw;
+  padding: 1.5vw;
+  background-color: #7d7d7d;
+  border-radius: 0.5em;
+  border-bottom: 4px solid black;
+  box-shadow: inset 0 0 1px 1.5px #6e6e6e,
+              inset 0 0 2px 2px #6b6b6b ;
+  margin: 2px;
+  font-size: 18px;
+  margin-top: 4px;
 }
 
 .klava_line {
   display: flex;
 }
-
 .button {
   width: 4vw;
   height: 4vw;
@@ -17,51 +23,160 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-    position: relative;
-    background: #333;
-    text-align: center;
-    color: #eee;
-    border-radius: 0.3em;
-    box-sizing: border-box;
-    cursor: pointer;
-    -webkit-user-select: none;
-    border: 1px solid #444;
-    box-shadow: 0 0.2em 0 0.05em #222;
-    border-bottom-color: #555;
+  position: relative;
+  background: #333;
+  text-align: center;
+  color: #eee;
+  border-radius: 0.3em;
+  box-sizing: border-box;
+  cursor: pointer;
+  -webkit-user-select: none;
+  border: 1px solid #444;
+  box-shadow: 0 0.2em 0 0.05em #222;
+  border-bottom-color: #555;
+}
+.button:hover {
+  text-shadow: 0 0 10px #6b6b6b;
+  background: #383838;
 }
 .button:active {
-    background: #2a2a2a;
-    color: #aaa;
-    position: relative;
-    top: 0.2em;
-    box-shadow: 0 0 0 0.05em black;
+  background: #2a2a2a;
+  color: #aaa;
+  position: relative;
+  top: 0.2em;
+  box-shadow: 0 0 0 0.05em black;
 }
 .main_klava span {
   display: block;
 }
-#Tab {
-  width: 6vw;
-}
-#line1 #bSlash {
+#Tab,
+#line1 #bSlash,
+#CapsLock,
+#Enter,
+#Ctrl0, #Ctrl6  {
   width: 6vw;
 }
 #Back {
   width: 8vw;
 }
-#CapsLock {
-  width: 6vw;
-}
-#Enter {
-  width: 6vw;
-}
 #Shift0, #Shift12 {
   width: 8.25vw;
-}
-#Ctrl0, #Ctrl6 {
-  width: 6vw;
 }
 #Space {
   width: 30vw;
   margin-left: 2.8vw;
   margin-right: 2.8vw;
+}
+
+@media (max-width: 1280px) and (min-width: 1025px){
+  .main_klava {
+    font-size: 15px;
+  }
+  .button {
+    width: 3.5vw;
+    height: 3.5vw;
+    margin: 3px;
+  }
+  #Tab,
+  #line1 #bSlash,
+  #CapsLock,
+  #Enter,
+  #Ctrl0, #Ctrl6  {
+    width: 6.5vw;
+  }
+  #Back {
+    width: 9.5vw;
+  }
+  #Shift0, #Shift12 {
+    width: 8.5vw;
+  }
+  #Space {
+    width: 26vw;
+    margin-left: 2.8vw;
+    margin-right: 2.8vw;
+  }
+}
+@media (max-width: 1366px) and (min-width: 1281px){
+  .main_klava {
+    font-size: 14px;
+  }
+  .button {
+    width: 2.8vw;
+    height: 2.8vw;
+    margin: 2.5px;
+  }
+  #Tab,
+  #line1 #bSlash,
+  #CapsLock,
+  #Enter,
+  #Ctrl0, #Ctrl6  {
+    width: 6vw;
+  }
+  #Back {
+    width: 9.25vw;
+  }
+  #Shift0, #Shift12 {
+    width: 7.55vw;
+  }
+  #Space {
+    width: 21.65vw;
+    margin-left: 1.8vw;
+    margin-right: 1.8vw;
+  }
+}
+@media (max-width: 1440px) and (min-width: 1366px){
+  .main_klava {
+    font-size: 14px;
+  }
+  .button {
+    width: 2.8vw;
+    height: 2.8vw;
+    margin: 2.5px;
+  }
+  #Tab,
+  #line1 #bSlash,
+  #CapsLock,
+  #Enter,
+  #Ctrl0, #Ctrl6  {
+    width: 6vw;
+  }
+  #Back {
+    width: 9.25vw;
+  }
+  #Shift0, #Shift12 {
+    width: 7.55vw;
+  }
+  #Space {
+    width: 21.65vw;
+    margin-left: 1.8vw;
+    margin-right: 1.8vw;
+  }
+}
+@media (max-width: 1920px) and (min-width: 1440px){
+  .main_klava {
+    font-size: 18px;
+  }
+  .button {
+    width: 2.8vw;
+    height: 2.8vw;
+    margin: 2.5px;
+  }
+  #Tab,
+  #line1 #bSlash,
+  #CapsLock,
+  #Enter,
+  #Ctrl0, #Ctrl6  {
+    width: 6vw;
+  }
+  #Back {
+    width: 9.25vw;
+  }
+  #Shift0, #Shift12 {
+    width: 7.55vw;
+  }
+  #Space {
+    width: 21vw;
+    margin-left: 1.8vw;
+    margin-right: 1.8vw;
+  }
 }

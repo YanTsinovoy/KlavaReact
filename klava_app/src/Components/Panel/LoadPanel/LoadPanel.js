@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import "./load_panel.css"
+
 
 let LoadPanel = p => {
   let loadLine = p.numCur / (p.numFin / p.width)

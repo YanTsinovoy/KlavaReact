@@ -23,6 +23,10 @@ let incLine = () => ({type: "INC_LINE"})
 let textLen = l => ({type: "SET_TEXT_LENGTH", len: l})
 //textWorkReducer end
 
+//timeReducer
+let inpTime = () => ({type: "INC_TIMER"})
+//timeReducer End
+
 
 //panel & text sonc action
 function processingInpVal(val){
@@ -62,4 +66,4 @@ function saveAndCleanValInpv(val){
 
 export {switchErr, addErr, setErrPos, incSumW, zeroSumW,
 finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV,
- incLine, startPrint,processingInpVal, saveAndCleanValInpv}
+ incLine, startPrint,processingInpVal, saveAndCleanValInpv, inpTime}

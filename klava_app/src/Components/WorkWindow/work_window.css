@@ -1,6 +1,92 @@
+* {
+  box-sizing: border-box;
+}
 .text_window, .work_window  {
+  width: 60vw;
+}
+.work_window {
+  margin: 2px;
+}
+.text_window {
   border: 2px solid black;
+  height: 90px;
+}
+.error_mess {
+  height: 25px;
+  margin-top: -5px;
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 700;
 }
 .main_input {
   width: 100%;
+  resize: none;
+  height: 140px;
+  background: #ffffff90;
+  transition: background-color 1s;
+  outline: none;
+  margin: 5px 0 0 0;
+  text-align: center;
+  padding-top: 55px;
+}
+.main_input:focus {
+  background: #ffffff;
+}
+.letter, .main_input {
+  font-size: 28px;
+}
+
+.text_window {
+  background-color: #d1cfcd;
+  padding: 2px;
+  font-weight: 600;
+}
+
+@media (max-width: 1280px) and (min-width: 1025px){
+  .letter, .main_input {
+    font-size: 22px;
+  }
+  .main_input {
+    height: 100px;
+    padding-top: 35px;
+  }
+  .text_window {
+    height: 60px;
+  }
+}
+@media (max-width: 1366px) and (min-width: 1280px){
+  .letter, .main_input {
+    font-size: 22px;
+  }
+  .main_input {
+    height: 100px;
+    padding-top: 35px;
+  }
+  .text_window {
+    height: 60px;
+  }
+}
+@media (max-width: 1440px) and (min-width: 1366px){
+  .letter, .main_input {
+    font-size: 24px;
+  }
+  .main_input {
+    height: 130px;
+    padding-top: 55px;
+  }
+  .text_window {
+    height: 80px;
+  }
+}
+@media (max-width: 1920px) and (min-width: 1440px){
+  .letter, .main_input {
+    font-size: 28px;
+  }
+  .main_input {
+    height: 100px;
+    padding-top: 20px;
+  }
+  .text_window {
+    height: 90px;
+  }
 }

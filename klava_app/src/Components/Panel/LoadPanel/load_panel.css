@@ -1,0 +1,20 @@
+.load_panel {
+  margin: 10px;
+}
+.load_panel {
+  height: 40px;
+  border: 1px solid green;
+  border-radius: 2px;
+  height: 40px;
+  background: linear-gradient(to right, #3a3a3a, #000);
+}
+.load_panel-indicator {
+  background:linear-gradient(to left, #6cdb4a, #098e00);
+  height: 38px;/*TEST*/
+}
+.load_panel:hover {
+  background: linear-gradient(to right, #000, #3a3a3a);
+}
+.load_panel-indicator:hover {
+  background:linear-gradient(to left, #82ea62, #0a7f02);
+}

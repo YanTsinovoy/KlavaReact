@@ -1,0 +1,53 @@
+.timer_panel {
+  margin: 2px;
+  width: 16.5vw;
+  user-select: none;
+}
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  color: #ffffff;
+  height: 92%;
+  margin: 5% 5% 10% 5%;
+}
+.time {
+  font-size: 48px;
+}
+.time-label {
+  margin-top: 5px;
+  font-size: 18px;
+  color: #ffffff90;
+}
+
+@media (max-width: 1024px) and (min-width: 768px){
+  .time {
+    font-size: 38px;
+  }
+}
+@media (max-width: 1280px) and (min-width: 1024px){
+  .time {
+    font-size: 38px;
+  }
+}
+@media (max-width: 1366px) and (min-width: 1280px){
+  .time {
+    font-size: 30px;
+  }
+}
+@media (max-width: 1440px) and (min-width: 1367px){
+  .time {
+    font-size: 42px;
+  }
+}
+@media (max-width: 1920px) and (min-width: 1440px){
+  .time {
+    font-size: 38px;
+  }
+  .timer {
+    height: 100%;
+    margin: 0 5% 10% 5%;
+  }
+}

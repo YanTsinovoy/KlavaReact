@@ -1,5 +1,7 @@
 .chart_canvas {
-
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.2px;
 }
 .chart_canvas_horizontal {
   display: flex;
@@ -7,8 +9,14 @@
 .chart_canvas_horizontal-value_name {
   transform: rotate(180deg);
   writing-mode: tb-rl;
-  padding: 0;
+  padding: 0 0 0 3px;
 }
 .chart_canvas_step_name {
   padding: 0;
+}
+.canvas_ch {
+  background-color: #3f3d3d50;
+}
+.canvas_ch:hover {
+  background-color: #3f3d3d10;
 }

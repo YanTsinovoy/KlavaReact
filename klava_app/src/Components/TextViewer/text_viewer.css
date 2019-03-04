@@ -1,10 +1,54 @@
 .text_viewer {
-  width: 30vw;
-  height: 30vh;
-  border: 2px solid green;
-  overflow-x: auto;
+  margin: 2px;
+  width: 320px;
+  height: 100%;
+  border: 2px solid #000;
+  overflow-x: hidden;
+  color: #ffffff90;
+  background-color: #1c1c1c;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #4f4f4f;
+    border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 0 20px #8e8e8e90;
 }
 
 .text_viewer-line {
-  font-size: 1vw;
+  font-size: 1.2vw;
+  margin: 1em;
+}
+
+@media (max-width: 1024px) and (min-width: 768px){
+  .text_viewer {
+    width: 280px;
+  }
+}
+@media (max-width: 1280px) and (min-width: 1025px){
+  .text_viewer {
+    width: 340px;
+  }
+}
+@media (max-width: 1366px) and (min-width: 1281px){
+  .text_viewer {
+    width: 360px;
+  }
+}
+@media (max-width: 1440px) and (min-width: 1366px){
+  .text_viewer {
+    width: 380px;
+  }
+}
+@media (max-width: 1920px) and (min-width: 1440px){
+  .text_viewer {
+    width: 420px;
+  }
 }
