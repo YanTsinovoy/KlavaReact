@@ -98,11 +98,12 @@
 }
 @media (max-width: 1366px) and (min-width: 1281px){
   .main_klava {
-    font-size: 14px;
+    padding: 0.2vw;
+    font-size: 13px;
   }
   .button {
-    width: 2.8vw;
-    height: 2.8vw;
+    width: 2.6vw;
+    height: 2.6vw;
     margin: 2.5px;
   }
   #Tab,
@@ -113,18 +114,18 @@
     width: 6vw;
   }
   #Back {
-    width: 9.25vw;
+    width: 9.4vw;
   }
   #Shift0, #Shift12 {
     width: 7.55vw;
   }
   #Space {
-    width: 21.65vw;
+    width: 20.2vw;
     margin-left: 1.8vw;
     margin-right: 1.8vw;
   }
 }
-@media (max-width: 1440px) and (min-width: 1366px){
+@media (max-width: 1440px) and (min-width: 1367px){
   .main_klava {
     font-size: 14px;
   }
