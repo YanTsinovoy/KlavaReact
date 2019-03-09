@@ -27,6 +27,20 @@ let textLen = l => ({type: "SET_TEXT_LENGTH", len: l})
 let inpTime = () => ({type: "INC_TIMER"})
 //timeReducer End
 
+//gameReducer
+let enGo = () => ({type: "ENEMY_GO"})
+let setWidth = width => ({type: 'SET_WIDTH', w:width})
+//gameReducer End
+
+//timer & game
+function timeAndEnemy(){
+  return function (dispatch){
+    dispatch(inpTime())
+    dispatch(enGo())
+  }
+}
+//timer & game End
+
 
 //panel & text sonc action
 function processingInpVal(val){
@@ -64,6 +78,6 @@ function saveAndCleanValInpv(val){
 
 
 
-export {switchErr, addErr, setErrPos, incSumW, zeroSumW,
+export {setWidth, timeAndEnemy , switchErr, addErr, setErrPos, incSumW, zeroSumW,
 finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV,
  incLine, startPrint,processingInpVal, saveAndCleanValInpv, inpTime}

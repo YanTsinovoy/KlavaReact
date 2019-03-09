@@ -55,7 +55,7 @@ class Klava extends Component {
       res.push(klavaObj[x])
     }
     return res.map((line, index)=> (
-      <div className={"klava_line"} id={"line"+index}>
+      <div key={index} className={"klava_line"} id={"line"+index}>
         {line.map(
           (button, ind) => {
             let curBtn = this.currentSymbol(this.props.textInp, this.props.text, this.props.ind)
@@ -69,7 +69,7 @@ class Klava extends Component {
             }
             !checker(badBtn) || console.error(button[0])
             return (
-            <div className="button"
+            <div key={index + ind} className="button"
             style={
               {
                 background: checker(curBtn) ? "green" :

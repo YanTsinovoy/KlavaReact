@@ -1,6 +1,34 @@
-.game {
-  border: 2px solid orange;
+#game {
   color: red;
   width: 48vw;
   font-size: 32px;
+  background-image: url("../../images/cityBackground.png"), url("../../images/skyBackground.png") ;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0%, 100%;
+  position: relative;
+  animation: sky 850s linear infinite;
+  transition: all 0.5s;
+}
+
+@keyframes sky{
+    from { background-position: 0%, 100%;}
+    to { background-position: 100%, 0%; }
+}
+
+#player, #enemy {
+  width: 80px;
+  height: 30px;
+  position: absolute;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: all 0.5s;
+}
+#player {
+  background-image: url("../../images/player.png");
+  bottom: 0;
+}
+#enemy {
+  background-image: url("../../images/enemy.png");
+  bottom: 30px;
 }

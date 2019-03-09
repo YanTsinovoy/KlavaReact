@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './work_window.css';
-import {switchErr, addErr, setErrPos, incSumW, zeroSumW,
+import {timeAndEnemy, switchErr, addErr, setErrPos, incSumW, zeroSumW,
 finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV,
  incLine, startPrint, processingInpVal, saveAndCleanValInpv, inpTime} from  "../../actionCreators.js"
 import {store} from "../../redux_store.js"
@@ -10,7 +10,7 @@ import {testText, testText2} from './testText.js'
 let mapStateToProps = state => ({err: state.err ,pnl: state.pnl, txt: state.txt})
 let mapDispatchToProps = {switchErr, addErr, setErrPos, incSumW, zeroSumW,
 finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV, incLine, startPrint,
- processingInpVal, saveAndCleanValInpv, inpTime}
+ processingInpVal, saveAndCleanValInpv, timeAndEnemy}
 
 let TextWindow = p =>
       <div className="text_window">
@@ -25,7 +25,7 @@ let CongrText = p =>
 let MainInput = p =>
       <textarea
         className="main_input"
-        onInput={p.inp} maxLength={p.errP}
+        onChange={p.inp} maxLength={p.errP}
         value={p.val} onFocus={p.foc}
         onBlur={p.blur}
         style={{border: p.err ? `2px solid red` : "none"}}
@@ -52,7 +52,7 @@ class WorkWindow extends Component {
   seedTimer = e => {
     if(this.firstFocus !== 0 )return//костыль для срабатывания только при первом фокусе
     this.timer = setInterval(() => {
-      this.props.inpTime()
+      this.props.timeAndEnemy()
       this.props.pushSpeed(this.props.pnl.sumW * 60)
       this.props.zeroSumW()
     },1000)
@@ -104,7 +104,7 @@ class WorkWindow extends Component {
   }
 
   componentDidMount(){
-    this.props.addTxt(testText)
+    this.props.addTxt(testText2)
     this.props.startPrint()
   }
 

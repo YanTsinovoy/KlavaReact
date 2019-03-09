@@ -7,7 +7,7 @@ import textSeparator from './utils/textSeparator.js';
 import copy from './utils/copy.js'
 import thunk from 'redux-thunk';
 
-let errorsReducer = (state, action) => {
+const errorsReducer = (state, action) => {
   if (state === undefined) return {
     error: false, // сделана ли ошибка
     errPos: 999, // позиция ошибки в тексте ( для ограничения длины инпута)
@@ -36,7 +36,7 @@ let errorsReducer = (state, action) => {
   }
   return state
 }
-let panelReduser = (state, action) => {
+const panelReduser = (state, action) => {
   if (state === undefined) return {
     sumW: 0, // количество набраного текста необходимое для замера скорости
     curSpeed: [0], // массив скоростей
@@ -87,7 +87,7 @@ let panelReduser = (state, action) => {
   return state
 }
 
-let textWorkReducer = (state, action) => {
+const textWorkReducer = (state, action) => {
   if (state === undefined) return {
     text: [], // массив с строками одного текста
     inputValue: "", // значение получамые с инпута
@@ -115,11 +115,22 @@ let textWorkReducer = (state, action) => {
     })
   return state
 }
-let timeReducer = (state={m:0, s:0}, action) => {
+const timeReducer = (state={m:0, s:0}, action) => {
   if(action.type === "INC_TIMER"){
     if(state.s === 59){
       return {m: ++state.m, s:0}
     } else return {m:state.m, s: ++state.s}
+  }
+  return state
+}
+const gameReducer = (state, action) => {
+  if(state === undefined)
+    return {diff: 1000, width: 0, enX: 0, plX: 0}
+  if(action.type === 'SET_WIDTH')
+    return {...state, width: action.w}
+  if(action.type === "ENEMY_GO"){
+    let nPos = state.enX += Math.round(state.width / state.diff)
+    return {...state, enX: nPos}
   }
   return state
 }
@@ -128,7 +139,8 @@ const reducers = combineReducers({
   err: errorsReducer,
   pnl: panelReduser,
   txt: textWorkReducer,
-  time: timeReducer
+  time: timeReducer,
+  game: gameReducer
 })
 
 const store = createStore(reducers, applyMiddleware(thunk));
