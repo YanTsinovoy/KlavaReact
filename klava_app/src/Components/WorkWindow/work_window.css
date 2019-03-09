@@ -56,17 +56,23 @@
 }
 @media (max-width: 1366px) and (min-width: 1280px){
   .letter, .main_input {
-    font-size: 22px;
+    font-size: 18px;
   }
   .main_input {
-    height: 100px;
-    padding-top: 35px;
+    height: 65px;
+    padding-top: 20px;
+    margin: 0;
   }
   .text_window {
     height: 60px;
   }
+  .error_mess {
+    height: 20px;
+    font-size: 16px;
+    line-height: 20px;
+  }
 }
-@media (max-width: 1440px) and (min-width: 1366px){
+@media (max-width: 1440px) and (min-width: 1367px){
   .letter, .main_input {
     font-size: 24px;
   }
