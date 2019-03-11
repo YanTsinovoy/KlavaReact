@@ -29,7 +29,9 @@ let inpTime = () => ({type: "INC_TIMER"})
 
 //gameReducer
 let enGo = () => ({type: "ENEMY_GO"})
-let setWidth = width => ({type: 'SET_WIDTH', w:width})
+let setWidth = (width, plW, enW) => ({type: 'SET_WIDTH', w:width, pl: plW, en: enW})
+let setGameLength = l => ({type: "SET_LENGTH", len: l})
+let plGo = () => ({type: "PLAYER_GO"})
 //gameReducer End
 
 //timer & game
@@ -78,6 +80,6 @@ function saveAndCleanValInpv(val){
 
 
 
-export {setWidth, timeAndEnemy , switchErr, addErr, setErrPos, incSumW, zeroSumW,
+export {plGo, setGameLength, setWidth, timeAndEnemy , switchErr, addErr, setErrPos, incSumW, zeroSumW,
 finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV,
  incLine, startPrint,processingInpVal, saveAndCleanValInpv, inpTime}

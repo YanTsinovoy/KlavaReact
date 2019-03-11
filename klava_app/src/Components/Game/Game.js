@@ -6,14 +6,18 @@ let mapStateToProps = state => ({game: state.game})
 
 class Game extends Component {
   componentDidMount(){
-    this.props.setWidth(document.getElementById("game").offsetWidth)
+    this.props.setWidth(
+      document.getElementById("game").offsetWidth,
+      document.getElementById("player").offsetWidth,
+      document.getElementById("enemy").offsetWidth
+    )
   }
   render(){
     const p = this.props
     return (
       <div id="game">
           <div id="enemy" style={{left: p.game.enX + "px"}}></div>
-          <div id="player" ></div>
+          <div id="player" style={{left: p.game.plX + "px"}}></div>
       </div>
     )
   }

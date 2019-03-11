@@ -2,6 +2,7 @@
   color: #fff;
   font-weight: 600;
   letter-spacing: 0.2px;
+  user-select: none;
 }
 .chart_canvas_horizontal {
   display: flex;

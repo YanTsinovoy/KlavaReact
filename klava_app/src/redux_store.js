@@ -1,11 +1,8 @@
-import {
-  createStore,
-  combineReducers,
-  applyMiddleware
-} from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import textSeparator from './utils/textSeparator.js';
 import copy from './utils/copy.js'
 import thunk from 'redux-thunk';
+
 
 const errorsReducer = (state, action) => {
   if (state === undefined) return {
@@ -36,6 +33,8 @@ const errorsReducer = (state, action) => {
   }
   return state
 }
+
+
 const panelReduser = (state, action) => {
   if (state === undefined) return {
     sumW: 0, // количество набраного текста необходимое для замера скорости
@@ -72,20 +71,19 @@ const panelReduser = (state, action) => {
     })
   }
   if (action.type === "SET_TXT_OL") {
-    console.log("SET_TXT_OL", `state.ownLineLength:${state.ownLineLength} + action.lineLen:${action.lineLen}`)
     let line = state.ownLineLength + action.lineLen
     return copy(state, {
       ownLineLength: line
     })
   }
   if (action.type === 'SET_TXT_LN') {
-    console.log('SET_TXT_LN', `action.leng:${action.leng} + state.ownLineLength:${state.ownLineLength}`);
     return copy(state, {
       typedTextLength: action.leng + state.ownLineLength
     })
   }
   return state
 }
+
 
 const textWorkReducer = (state, action) => {
   if (state === undefined) return {
@@ -115,25 +113,82 @@ const textWorkReducer = (state, action) => {
     })
   return state
 }
-const timeReducer = (state={m:0, s:0}, action) => {
-  if(action.type === "INC_TIMER"){
-    if(state.s === 59){
-      return {m: ++state.m, s:0}
-    } else return {m:state.m, s: ++state.s}
+const timeReducer = (state = {
+  m: 0,
+  s: 0
+}, action) => {
+  if (action.type === "INC_TIMER") {
+    if (state.s === 59) {
+      return {
+        m: ++state.m,
+        s: 0
+      }
+    } else return {
+      m: state.m,
+      s: ++state.s
+    }
   }
   return state
 }
+
+
 const gameReducer = (state, action) => {
-  if(state === undefined)
-    return {diff: 1000, width: 0, enX: 0, plX: 0}
-  if(action.type === 'SET_WIDTH')
-    return {...state, width: action.w}
-  if(action.type === "ENEMY_GO"){
-    let nPos = state.enX += Math.round(state.width / state.diff)
-    return {...state, enX: nPos}
+  if (state === undefined)
+    return {
+      diff: 1000,
+      width: 0,
+      enX: 0,
+      plX: 0,
+      length: 0,
+      plW: 0,
+      enW: 0,
+      fin: "during"
+    }
+  if (action.type === 'SET_WIDTH')
+    return {
+      ...state,
+      width: action.w,
+      plW: action.pl,
+      enW: action.en
+    }
+  if (action.type === "ENEMY_GO") {
+    let nPos = state.enX + Math.round ( state.width / state.diff )
+    if (nPos >= (state.width - state.enW)) {
+      nPos = state.enX
+      return {
+        ...state,
+        enX: nPos,
+        fin: "LOSE"
+      }
+    }
+    return {
+      ...state,
+      enX: nPos
+    }
+  }
+  if (action.type === "SET_LENGTH") {
+    return {
+      ...state,
+      length: action.len
+    }
+  }
+  if (action.type === "PLAYER_GO") {
+    let nPos = state.plX + state.width / state.length
+    if (nPos >= state.width - state.plW) {
+      nPos = state.plX
+      return {
+        ...state,
+        plX: nPos,
+        fin: "WIN"
+      }
+    } else return {
+      ...state,
+      plX: nPos
+    }
   }
   return state
 }
+
 
 const reducers = combineReducers({
   err: errorsReducer,
@@ -145,6 +200,4 @@ const reducers = combineReducers({
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
-export {
-  store
-}
+export { store }

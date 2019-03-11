@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import './work_window.css';
-import {timeAndEnemy, switchErr, addErr, setErrPos, incSumW, zeroSumW,
+import {plGo ,setGameLength, timeAndEnemy, switchErr, addErr, setErrPos, incSumW, zeroSumW,
 finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV,
  incLine, startPrint, processingInpVal, saveAndCleanValInpv, inpTime} from  "../../actionCreators.js"
 import {store} from "../../redux_store.js"
 import { connect}   from 'react-redux';
 import {testText, testText2} from './testText.js'
+import axios from "axios";
+import { Redirect } from "react-router-dom";
 
-let mapStateToProps = state => ({err: state.err ,pnl: state.pnl, txt: state.txt})
-let mapDispatchToProps = {switchErr, addErr, setErrPos, incSumW, zeroSumW,
+
+let mapStateToProps = state => ({
+  err: state.err ,
+  pnl: state.pnl,
+  txt: state.txt,
+  game: state.game
+})
+let mapDispatchToProps = {plGo, setGameLength, switchErr, addErr, setErrPos, incSumW, zeroSumW,
 finPrnt, pushSpeed, setTxt, addTxt, addInpV, cleanInpV, incLine, startPrint,
  processingInpVal, saveAndCleanValInpv, timeAndEnemy}
 
@@ -44,7 +52,10 @@ class WorkWindow extends Component {
   counter = 0
 
   inputHandler = e => {
-    if(!this.props.pnl.fin) this.props.processingInpVal(e.target.value)
+    if(!this.props.pnl.fin){
+       this.props.processingInpVal(e.target.value)
+        if(!this.props.err.error) this.props.plGo()
+    }
   }
 
   firstFocus = 0
@@ -102,16 +113,23 @@ class WorkWindow extends Component {
         }>{el.t}</span>
       })
   }
-
-  componentDidMount(){
-    this.props.addTxt(testText2)
-    this.props.startPrint()
+  componentWillUnmount(){
+    clearInterval(this.timer)
   }
-
   render(){
     let p = this.props
     if(p.pnl.fin){
       clearInterval(this.timer)
+    }
+    if(p.txt.text.length === 0 ){
+      return (
+        <Redirect  to=""/>
+      )
+    }
+    if(p.game.fin === "LOSE" ||  p.game.fin === "WIN" ) {
+      return (
+        <Redirect  to="fin"/>
+      )
     }
     return (
       <div className="work_window">

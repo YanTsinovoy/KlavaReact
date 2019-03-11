@@ -7,43 +7,32 @@ import LoadPanel from './LoadPanel/LoadPanel.js'
 let mapStateToProps = state => ({txt: state.txt, pnl: state.pnl, err:state.err})
 
 class WorkPanel extends Component {
-  width = 300
-  height = 200
-  resizer(){
-    if(window.innerWidth <= 1024 && window.innerWidth > 768 ){
-      this.width = 180
-      this.height = 160
-    }
-    if(window.innerWidth <= 1280 && window.innerWidth > 1024 ){
-      this.width = 220
-      this.height = 160
-    }
-    if(window.innerWidth <= 1366 && window.innerWidth > 1280 ){
-      this.width = 280
-      this.height = 150
-    }
-    if(window.innerWidth <= 1440 && window.innerWidth > 1366 ){
-      this.width = 280
-      this.height = 200
-    }
-    if(window.innerWidth <= 1920&& window.innerWidth > 1440 ){
-      this.width = 380
-      this.height = 320
-    }
+  state = {
+    width : 300,
+    height : 200
   }
-  render (){
+  resizer(){
+    let newWidth = document.getElementById("panel").offsetWidth
+    let newHeight = document.getElementById("panel").offsetHeight
+    this.setState({width: newWidth,height: newHeight})
+  }
+  componentDidMount(){
     this.resizer()
     window.onresize = e => {
+      console.log(this)
       this.resizer()
     }
+  }
+
+  render (){
     let p = this.props
     return (
-      <div className="work_panel-main">
+      <div id="panel">
           <LoadPanel numCur={p.pnl.typedTextLength}
           numFin={p.txt.text.reduce((sum, cur) => sum + cur.length, 0)}
-          width = {this.width + 20}
+          width = {this.state.width - 20}
           />
-          <ChartCanvas sizes={[this.width,this.height]} history={p.pnl.curSpeed} names={["characters", "time: 1s"]}/>
+          <ChartCanvas width={this.state.width-40} height={this.state.height-80} history={p.pnl.curSpeed} names={["characters", "time: 1s"]}/>
       </div>
     )
   }
